@@ -1,7 +1,7 @@
 const word = document.querySelector('.word');
-let correctCount = document.querySelector('.correct-count');
-let wrongCount = document.querySelector('.wrong-count');
-let wordMistakes = document.querySelector('.word-mistakes');
+const correctCount = document.querySelector('.correct-count');
+const wrongCount = document.querySelector('.wrong-count');
+const wordMistakes = document.querySelector('.word-mistakes');
 const timer = document.querySelector('#timer');
 
 const words = ['apple', 'banana', 'peach', 'melon', 'unicorn', 'language', 'sport', 'hello', 'world'];
@@ -14,13 +14,14 @@ function clearData() {
   correctCount.textContent = '0';
   wrongCount.textContent = '0';
   timer.textContent = '00:00';
+  clearInterval(timerId);
 }
 
 function setRandomWord() {
   word.innerHTML = '';
-  let newWord = words[getRandomInt(0, 9)];
-  for (let i =0; i < newWord.length; i++) {
-    let span = document.createElement('span');
+  const newWord = words[getRandomInt(0, 9)];
+  for (let i = 0; i < newWord.length; i++) {
+    const span = document.createElement('span');
     span.textContent = newWord[i];
     word.append(span);
   }
@@ -56,6 +57,19 @@ function setRandomWord() {
     }
  }
 
+ function chekEndGame() {
+  if (correctCount.textContent === '5') {
+      alert(`Победа! Ваше время ${timer.textContent}`);
+      clearData();
+  }
+
+  if (wrongCount.textContent === '5') {
+      alert(`Сегодня не Ваш день:(`);
+      clearData();
+  }
+  setRandomWord();
+}
+
  const timerId = setInterval(() => {
   
     const timerData = timer.textContent.split(':');
@@ -85,16 +99,6 @@ document.addEventListener('keydown', function (event) {
         wrongCount.textContent = ++wrongCount.textContent;
     }
     wordMistakes.textContent = '0';
-    setRandomWord();
+    setTimeout(() => chekEndGame(), 0);
   }
-
-  if (correctCount.textContent === '5') {
-        alert(`Победа! Ваше время ${timer.textContent}`);
-        clearData();
-    }
-
-    if (wrongCount.textContent === '5') {
-        alert(`Сегодня не Ваш день:(`);
-        clearData();
-    }
 });
