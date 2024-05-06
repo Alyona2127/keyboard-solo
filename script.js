@@ -102,3 +102,5 @@ document.addEventListener('keydown', function (event) {
     setTimeout(() => chekEndGame(), 0);
   }
 });
+
+setRandomWord();
